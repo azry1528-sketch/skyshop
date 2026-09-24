@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SkyRide Store Design System — mobilité électrique (trottinettes, Surron)
+   Palette tech/urbaine inspirée des sites e-scooter : bleu électrique + noir + accent lime. All HSL. */
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 9%;
+
+    /* Brand */
+    --primary: 221 83% 48%;         /* bleu électrique */
+    --primary-foreground: 210 40% 98%;
+    --primary-hover: 221 83% 42%;
+    --primary-glow: 199 89% 56%;
+
+    --secondary: 222 47% 11%;       /* noir/anthracite */
+    --secondary-foreground: 210 40% 98%;
+
+    --accent: 84 81% 52%;           /* vert lime électrique */
+    --accent-foreground: 222 47% 9%;
+
+    --muted: 214 32% 94%;
+    --muted-foreground: 215 16% 42%;
+
+    --destructive: 0 78% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --success: 152 65% 32%;
+    --success-foreground: 0 0% 98%;
+
+    --border: 214 24% 88%;
+    --input: 214 24% 88%;
+    --ring: 221 83% 48%;
+
+    --radius: 0.75rem;
+
+    /* Surfaces */
+    --surface-warm: 210 40% 96%;
+    --surface-dark: 222 47% 9%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(221 83% 48%) 0%, hsl(199 89% 56%) 100%);
+    --gradient-warm: linear-gradient(180deg, hsl(210 40% 98%) 0%, hsl(214 32% 94%) 100%);
+    --gradient-cta: linear-gradient(90deg, hsl(221 83% 48%), hsl(199 89% 56%));
+    --gradient-dark: linear-gradient(135deg, hsl(222 47% 9%), hsl(221 60% 16%));
+
+    /* Shadows */
+    --shadow-warm: 0 10px 30px -12px hsl(221 83% 48% / 0.35);
+    --shadow-card: 0 4px 20px -8px hsl(222 47% 9% / 0.12);
+    --shadow-soft: 0 2px 8px -2px hsl(222 47% 9% / 0.08);
+
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 47% 7%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 7%;
+    --secondary: 214 32% 20%;
+    --secondary-foreground: 210 40% 96%;
+    --accent: 84 81% 55%;
+    --accent-foreground: 222 47% 7%;
+    --muted: 222 30% 16%;
+    --muted-foreground: 215 16% 70%;
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4 { @apply font-semibold tracking-tight; }
+}
+
+@layer utilities {
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  .bg-gradient-warm { background: var(--gradient-warm); }
+  .bg-gradient-cta { background: var(--gradient-cta); }
+  .bg-gradient-dark { background: var(--gradient-dark); }
+  .shadow-warm { box-shadow: var(--shadow-warm); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+}
