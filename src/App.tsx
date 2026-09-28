@@ -9,6 +9,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import PixelPageView from "./components/PixelPageView";
 import ScrollToTopFab from "./components/jangolo/ScrollToTopFab";
 import BottomNav from "./components/jangolo/BottomNav";
+import InstallPrompt from "./components/jangolo/InstallPrompt";
 import ErrorBoundary from "./components/jangolo/ErrorBoundary";
 import Promotions from "./pages/Promotions";
 import Index from "./pages/Index";
@@ -88,6 +89,7 @@ const App = () => (
             </ErrorBoundary>
             <ScrollToTopFab />
             <BottomNav />
+            <InstallPrompt />
           </BrowserRouter>
         </CartProvider>
         </I18nProvider>

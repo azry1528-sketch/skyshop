@@ -3,7 +3,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /auth
 
-Sitemap: https://skypulseshop.cm/sitemap.xml
+Sitemap: https://skyridestore.fr/sitemap.xml
 
 # AI crawlers
 User-agent: GPTBot

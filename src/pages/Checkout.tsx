@@ -156,6 +156,8 @@ const Checkout = () => {
     }
     if (form.payment_method === "crypto") {
       toast.success("Commande enregistrée", { description: "Envoyez le paiement à l'adresse crypto indiquée, notre équipe confirmera dès réception." });
+    } else if (form.payment_method === "paypal") {
+      toast.success("Commande enregistrée", { description: "Notre équipe vérifiera votre paiement PayPal avant l'expédition." });
     } else {
       toast.success("Commande enregistrée", { description: "Votre carte cadeau sera vérifiée par notre équipe." });
     }

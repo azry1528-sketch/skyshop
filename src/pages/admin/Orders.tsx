@@ -159,7 +159,7 @@ const Orders = () => {
                   <p className="text-[10px] text-accent-foreground font-semibold">+{formatEUR(o.remaining_amount_xaf)} livraison</p>
                 )}
               </div>
-              <div className="md:col-span-1 text-xs uppercase">{o.payment_method === "gift_card" ? "Carte cadeau" : o.payment_method === "crypto" ? "Crypto" : o.payment_method}</div>
+              <div className="md:col-span-1 text-xs uppercase">{o.payment_method === "gift_card" ? "Carte cadeau" : o.payment_method === "crypto" ? "Crypto" : o.payment_method === "paypal" ? "PayPal" : o.payment_method}</div>
               <div className="md:col-span-2 flex items-center gap-1">
                 <Select value={o.status} onValueChange={(v) => updateStatus(o.id, v)}>
                   <SelectTrigger className={`h-9 text-xs border flex-1 ${STATUS_COLORS[o.status] || ""}`}>
@@ -209,6 +209,29 @@ const Orders = () => {
                     </a>
                   </div>
                 )}
+
+                {/* Justificatif de paiement */}
+                <div className="bg-card border border-border rounded-xl p-3 space-y-1.5">
+                  <p className="font-bold text-xs uppercase tracking-wide text-primary">Justificatif de paiement</p>
+                  <p className="text-xs">
+                    <span className="text-muted-foreground">Mode :</span>{" "}
+                    <strong>{o.payment_method === "gift_card" ? "Carte cadeau" : o.payment_method === "paypal" ? "PayPal" : o.payment_method === "crypto" ? "Crypto-monnaie" : o.payment_method}</strong>
+                  </p>
+                  {o.payment_reference ? (
+                    <div className="flex items-center justify-between gap-2 p-2 rounded-lg bg-muted">
+                      <p className="text-sm font-mono break-all select-all">{o.payment_reference}</p>
+                      <button
+                        type="button"
+                        onClick={() => { navigator.clipboard.writeText(o.payment_reference); toast.success("Copié"); }}
+                        className="text-xs font-semibold text-primary hover:underline shrink-0"
+                      >
+                        Copier
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-destructive font-semibold">Aucun code / référence fourni par le client</p>
+                  )}
+                </div>
 
                 {/* Infos client */}
                 <div className="grid md:grid-cols-2 gap-2 text-xs">

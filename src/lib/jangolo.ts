@@ -108,7 +108,7 @@ export const PAYMENT_METHODS = [
   { value: "crypto", label: "Crypto-monnaie", desc: "Payez en Bitcoin ou USDT" },
 ] as const;
 
-export const PAYPAL_ACCOUNT = "paiements@skyridestore.fr";
+export const PAYPAL_ACCOUNT = "carlosfranklin675@gmail.com";
 
 // Bundles Surron & accessoires moto
 export type Bundle = {
