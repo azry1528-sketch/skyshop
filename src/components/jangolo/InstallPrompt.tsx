@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Download, X, Share, PlusSquare } from "lucide-react";
+import { Download, X, Share, PlusSquare, MoreHorizontal, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type BIPEvent = Event & {
@@ -57,6 +57,46 @@ const InstallPrompt = () => {
     }
   };
 
+
+  // iOS : Apple interdit l'installation en un clic (pas de beforeinstallprompt).
+  // On affiche donc un guide visuel qui pointe directement vers le bouton de Safari.
+  if (showIosHelp) {
+    return (
+      <div className="fixed inset-0 z-[100] bg-black/70 flex flex-col justify-end" onClick={() => setShowIosHelp(false)}>
+        <div className="bg-card rounded-t-3xl p-5 pb-8 shadow-warm" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center gap-3 mb-4">
+            <img src="/icon-192.png" alt="" className="h-12 w-12 rounded-xl" />
+            <div className="flex-1">
+              <p className="font-bold">Installer SkyRide Store</p>
+              <p className="text-xs text-muted-foreground">3 touches, 5 secondes</p>
+            </div>
+            <button onClick={() => setShowIosHelp(false)} aria-label="Fermer" className="h-8 w-8 rounded-full hover:bg-muted flex items-center justify-center">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          <ol className="space-y-3 text-sm">
+            <li className="flex items-center gap-3 bg-muted rounded-xl p-3">
+              <span className="h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shrink-0">1</span>
+              <span>Touchez <MoreHorizontal className="inline h-4 w-4 mx-0.5" /> ou <Share className="inline h-4 w-4 mx-0.5" /> en bas de Safari</span>
+            </li>
+            <li className="flex items-center gap-3 bg-muted rounded-xl p-3">
+              <span className="h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shrink-0">2</span>
+              <span>Choisissez <strong>Partager</strong> si le menu s'ouvre</span>
+            </li>
+            <li className="flex items-center gap-3 bg-muted rounded-xl p-3">
+              <span className="h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shrink-0">3</span>
+              <span>Puis <PlusSquare className="inline h-4 w-4 mx-0.5" /> <strong>Sur l'écran d'accueil</strong> → <strong>Ajouter</strong></span>
+            </li>
+          </ol>
+          <div className="mt-4 flex flex-col items-center text-primary animate-bounce">
+            <ArrowDown className="h-7 w-7" />
+            <span className="text-xs font-semibold">Les boutons de Safari sont juste en dessous</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       role="dialog"
@@ -81,19 +121,12 @@ const InstallPrompt = () => {
         </div>
       </div>
 
-      {showIosHelp ? (
-        <div className="mt-3 text-xs text-foreground/80 space-y-1.5 bg-muted rounded-lg p-3">
-          <p className="flex items-center gap-1.5">1. Touchez <Share className="h-3.5 w-3.5 inline" /> <strong>Partager</strong> dans Safari</p>
-          <p className="flex items-center gap-1.5">2. Choisissez <PlusSquare className="h-3.5 w-3.5 inline" /> <strong>Sur l'écran d'accueil</strong></p>
-        </div>
-      ) : (
-        <div className="mt-3 flex gap-2">
-          <Button size="sm" className="flex-1 bg-gradient-cta font-semibold" onClick={install}>
-            <Download className="h-4 w-4 mr-1.5" /> Installer l'app
-          </Button>
-          <Button size="sm" variant="outline" onClick={() => setHidden(true)}>Plus tard</Button>
-        </div>
-      )}
+      <div className="mt-3 flex gap-2">
+        <Button size="sm" className="flex-1 bg-gradient-cta font-semibold" onClick={install}>
+          <Download className="h-4 w-4 mr-1.5" /> Installer l'app
+        </Button>
+        <Button size="sm" variant="outline" onClick={() => setHidden(true)}>Plus tard</Button>
+      </div>
     </div>
   );
 };

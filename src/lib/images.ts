@@ -18,4 +18,4 @@ const map: Record<string, string> = {
   "/src/assets/jangolo-essentials.jpg": essentials,
 };
 
-export const resolveImg = (url: string) => map[url] ?? url;
+export const resolveImg = (url?: string | null) => (url ? (map[url] ?? url) : "/placeholder.svg");

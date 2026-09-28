@@ -1,3 +1,4 @@
+import { safeStorage } from "@/lib/safeStorage";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 type Lang = "fr" | "en";
@@ -416,8 +417,11 @@ interface I18nCtx {
 const Ctx = createContext<I18nCtx>({ lang: "fr", setLang: () => {}, t: (k) => k, formatPrice: (n) => `${n}` });
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLangState] = useState<Lang>(() => (localStorage.getItem("jangolo:lang") as Lang) || "fr");
-  useEffect(() => { localStorage.setItem("jangolo:lang", lang); document.documentElement.lang = lang; }, [lang]);
+  const [lang, setLangState] = useState<Lang>(() => {
+    const saved = safeStorage.getItem("jangolo:lang") as Lang | null;
+    return saved && (dict as any)[saved] ? saved : "fr";
+  });
+  useEffect(() => { safeStorage.setItem("jangolo:lang", lang); document.documentElement.lang = lang; }, [lang]);
   const setLang = (l: Lang) => setLangState(l);
   const t = (k: Key) => (dict[lang] as any)[k] ?? (dict.fr as any)[k] ?? k;
   const formatPrice = (amount: number) => {

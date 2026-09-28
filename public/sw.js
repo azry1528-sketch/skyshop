@@ -4,7 +4,7 @@
  * - Pages : réseau d'abord, repli sur la coquille en cache si hors ligne
  * - Requêtes cross-origin (Supabase, images externes…) et non-GET : jamais interceptées
  */
-const VERSION = "skyride-v1";
+const VERSION = "skyride-v2";
 const SHELL = ["/", "/manifest.json", "/icon-192.png", "/icon-512.png", "/favicon.svg"];
 
 self.addEventListener("install", (event) => {
@@ -46,7 +46,9 @@ self.addEventListener("fetch", (event) => {
       caches.match(req).then((cached) => {
         if (cached) return cached;
         return fetch(req).then((res) => {
-          if (res.ok) {
+          // Ne jamais mettre en cache une page HTML servie à la place d'un asset (ancien chunk après redéploiement)
+          const type = res.headers.get("content-type") || "";
+          if (res.ok && !type.includes("text/html")) {
             const copy = res.clone();
             caches.open(VERSION).then((c) => c.put(req, copy));
           }

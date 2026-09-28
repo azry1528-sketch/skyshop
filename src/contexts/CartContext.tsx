@@ -1,3 +1,4 @@
+import { safeStorage } from "@/lib/safeStorage";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { pixelAddToCart } from "@/lib/fbPixel";
 
@@ -32,11 +33,18 @@ const STORAGE = "skyride_cart_v2";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>(() => {
-    try { return JSON.parse(localStorage.getItem(STORAGE) || "[]"); } catch { return []; }
+    try {
+      const v = JSON.parse(safeStorage.getItem(STORAGE) || "[]");
+      if (!Array.isArray(v)) return [];
+      // Ignore les articles anciens/corrompus (sans id, prix ou quantité valides)
+      return v
+        .filter((i: any) => i && i.id && i.name && Number.isFinite(Number(i.price_xaf)) && Number(i.quantity) > 0)
+        .map((i: any) => ({ ...i, cartKey: i.cartKey || i.id, slug: i.slug || "", image_url: i.image_url || "", price_xaf: Number(i.price_xaf), quantity: Number(i.quantity) }));
+    } catch { return []; }
   });
 
   useEffect(() => {
-    localStorage.setItem(STORAGE, JSON.stringify(items));
+    safeStorage.setItem(STORAGE, JSON.stringify(items));
   }, [items]);
 
   const add: CartCtx["add"] = ({ optionId, ...item }, qty = 1) => {

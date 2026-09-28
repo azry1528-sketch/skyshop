@@ -55,7 +55,7 @@ const Checkout = () => {
             phone: data.phone || f.phone,
             city: data.city || f.city,
             address: data.address || f.address,
-            delivery_zone: data.delivery_zone || f.delivery_zone,
+            delivery_zone: DELIVERY_ZONES.some(z => z.value === data.delivery_zone) ? (data.delivery_zone as string) : f.delivery_zone,
             email: user.email || f.email,
           }));
         } else if (user.email) {
@@ -77,7 +77,7 @@ const Checkout = () => {
     });
   }, [items, total]);
 
-  const zone = DELIVERY_ZONES.find(z => z.value === form.delivery_zone)!;
+  const zone = DELIVERY_ZONES.find(z => z.value === form.delivery_zone) ?? DELIVERY_ZONES[0];
   const deliveryFee = zone.fee;
   const grandTotal = total + deliveryFee;
 
@@ -132,7 +132,7 @@ const Checkout = () => {
       email: form.email || null,
       city: form.city,
       address: form.address,
-      delivery_zone: form.delivery_zone,
+      delivery_zone: zone.value,
       delivery_fee_xaf: deliveryFee,
       payment_method: form.payment_method,
       payment_reference: form.payment_method === "gift_card" && form.gift_card_brand

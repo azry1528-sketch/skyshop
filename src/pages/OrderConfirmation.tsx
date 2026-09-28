@@ -1,3 +1,4 @@
+import { safeStorage } from "@/lib/safeStorage";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import Header from "@/components/jangolo/Header";
@@ -148,8 +149,8 @@ const OrderConfirmation = () => {
         // Pixel Facebook : Purchase, une seule fois par commande même si la page est rafraîchie
         if (data) {
           const trackedKey = `fb_purchase_tracked_${reference}`;
-          if (!sessionStorage.getItem(trackedKey)) {
-            sessionStorage.setItem(trackedKey, "1");
+          if (!safeStorage.getItem(trackedKey)) {
+            safeStorage.setItem(trackedKey, "1");
             const orderItems: any[] = data.items || [];
             pixelPurchase({
               contentIds: orderItems.map((i: any) => i.id).filter(Boolean),

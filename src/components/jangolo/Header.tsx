@@ -1,3 +1,4 @@
+import { safeStorage } from "@/lib/safeStorage";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShoppingBag, Menu, Search, Facebook, Instagram, Youtube, X, LayoutGrid, Home, Info, Phone, Music2, Package, ChevronDown, User, Globe, Moon, Sun } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
@@ -27,12 +28,12 @@ const Header = () => {
 
   // Theme toggle
   const [theme, setTheme] = useState<"light" | "dark">(() => {
-    return (localStorage.getItem("skyride:theme") as "light" | "dark") || "light";
+    return safeStorage.getItem("skyride:theme") === "dark" ? "dark" : "light";
   });
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("skyride:theme", theme);
+    safeStorage.setItem("skyride:theme", theme);
   }, [theme]);
 
   useEffect(() => { if (searchOpen) setTimeout(() => inputRef.current?.focus(), 50); }, [searchOpen]);
