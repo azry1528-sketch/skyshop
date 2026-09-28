@@ -74,7 +74,11 @@ const Users = () => {
     if (role === "customer") {
       await supabase.from("user_roles").delete().eq("user_id", userId);
     } else {
-      const { error } = await supabase.from("user_roles").upsert({ user_id: userId, role: role as any }, { onConflict: "user_id" });
+      // La table user_roles a une contrainte unique sur (user_id, role) et non sur user_id seul :
+      // on remplace donc le rôle existant (un seul rôle par utilisateur dans l'interface).
+      const { error: delError } = await supabase.from("user_roles").delete().eq("user_id", userId);
+      if (delError) return toast.error(delError.message);
+      const { error } = await supabase.from("user_roles").insert({ user_id: userId, role: role as any });
       if (error) return toast.error(error.message);
     }
     toast.success("Rôle mis à jour");
