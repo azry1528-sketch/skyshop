@@ -6,6 +6,9 @@ export const SOCIALS = {
   tiktok: "https://tiktok.com/@skyridestore.fr",
   youtube: "https://youtube.com/@skyridestore",
 };
+export const WHATSAPP_NUMBER = "33773058797"; // +33 7 73 05 87 97
+export const whatsappLink = (message?: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}` + (message ? `?text=${encodeURIComponent(message)}` : "");
 export const formatEUR = (amount: number) =>
   new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 0 }).format(Math.round(amount)) + " €";
 

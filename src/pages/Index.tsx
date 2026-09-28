@@ -2,6 +2,7 @@ import Header from "@/components/jangolo/Header";
 import SEO from "@/components/SEO";
 import Footer from "@/components/jangolo/Footer";
 import ProductCard from "@/components/jangolo/ProductCard";
+import BudgetRecommender from "@/components/jangolo/BudgetRecommender";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useProducts, useProductsList, PRODUCTS_PER_PAGE } from "@/hooks/useProducts";
@@ -318,6 +319,9 @@ const Index = () => {
           })}
         </div>
       </section>
+
+      {/* RECOMMANDATION PAR BUDGET */}
+      <BudgetRecommender />
 
       {/* TOUS LES PRODUITS AVEC PAGINATION */}
       <section ref={productsSectionRef} className="container py-6 md:py-10">
